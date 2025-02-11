@@ -10,52 +10,57 @@ class Signup extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // 🔹 Curved Header with Gradient
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.green, Colors.teal],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
+              child: Container(
+                width: double.infinity,
+                height: 320,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.green, Colors.teal],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(50),
-                  bottomRight: Radius.circular(50),
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Let’s",
+                      style: TextStyle(
+                        fontSize: 37,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 3.0,
+                      ),
+                    ),
+                    Text(
+                      "Create your",
+                      style: TextStyle(
+                        fontSize: 45,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 4.0,
+                      ),
+                    ),
+                    Text(
+                      "Account",
+                      style: TextStyle(
+                        fontSize: 45,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 4.0,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Let’s",
-                    style: TextStyle(
-                      fontSize: 28,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  Text(
-                    "Create your",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "Account",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
               ),
             ),
 

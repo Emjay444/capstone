@@ -10,7 +10,7 @@ class Forgotpass extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 100),
 
             // 🔹 Lock Icon
             Container(
@@ -21,7 +21,7 @@ class Forgotpass extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: const Icon(
                 Icons.lock_outline,
-                size: 100,
+                size: 200,
                 color: Colors.green,
               ),
             ),
@@ -30,9 +30,18 @@ class Forgotpass extends StatelessWidget {
 
             // 🔹 Forgot Password Text
             const Text(
-              "FORGOT PASSWORD?",
+              "FORGOT",
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+
+            const Text(
+              "PASSWORD?",
+              style: TextStyle(
+                fontSize: 32,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
@@ -42,7 +51,7 @@ class Forgotpass extends StatelessWidget {
 
             // 🔹 Green Curved Container for Inputs
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 90),
               width: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -79,7 +88,7 @@ class Forgotpass extends StatelessWidget {
                     keyboardType: TextInputType.emailAddress,
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 40),
 
                   // 🔹 Reset Password Button
                   ElevatedButton(
@@ -98,7 +107,7 @@ class Forgotpass extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 45),
 
                   // 🔹 Back to Login Link
                   GestureDetector(

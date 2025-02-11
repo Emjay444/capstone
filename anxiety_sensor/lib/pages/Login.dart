@@ -142,7 +142,7 @@ class Login extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.95),
                     borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(25)),
+                        const BorderRadius.vertical(top: Radius.circular(50)),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
