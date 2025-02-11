@@ -6,36 +6,148 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Register")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              decoration: InputDecoration(labelText: "Name"),
+            // 🔹 Curved Header with Gradient
+            Container(
+              width: double.infinity,
+              height: 200,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.green, Colors.teal],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
+                ),
+              ),
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Let’s",
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  Text(
+                    "Create your",
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Account",
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            TextField(
-              decoration: InputDecoration(labelText: "Email"),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: "Password"),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Handle Registration
-              },
-              child: const Text("Sign Up"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text("Already have an account? Login"),
+
+            const SizedBox(height: 30),
+
+            // 🔹 Input Fields
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                children: [
+                  _buildInputField("Name"),
+                  const SizedBox(height: 15),
+                  _buildInputField("Email"),
+                  const SizedBox(height: 15),
+                  _buildInputField("Password", obscureText: true),
+                  const SizedBox(height: 15),
+                  _buildInputField("Retype Password", obscureText: true),
+                  const SizedBox(height: 15),
+
+                  // 🔹 Terms & Privacy Checkbox
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: false,
+                        onChanged: (bool? value) {},
+                        activeColor: Colors.green,
+                      ),
+                      const Expanded(
+                        child: Text(
+                          "I agree in the Terms & Privacy",
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+
+                  // 🔹 Already have an account
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Already have an account? Sign in",
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // 🔹 Sign Up Button
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 100, vertical: 15),
+                      elevation: 3,
+                    ),
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  // 🔹 Reusable Input Field
+  Widget _buildInputField(String hint, {bool obscureText = false}) {
+    return TextField(
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25),
+          borderSide: BorderSide(color: Colors.black26),
         ),
       ),
     );

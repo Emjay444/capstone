@@ -46,7 +46,7 @@ class Login extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 50),
                       child: Image.asset(
                         'assets/Green_Ribbon.png',
-                        height: 200,
+                        height: 100,
                       ),
                     ),
                     SizedBox(height: 20),
