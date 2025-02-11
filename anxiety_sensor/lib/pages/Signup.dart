@@ -11,15 +11,15 @@ class Signup extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
               child: Container(
                 width: double.infinity,
                 height: 320,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.green, Colors.teal],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                    colors: [Color(0xFF00634A), Color(0xFF3EAD7A)],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                   ),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(50),
@@ -117,7 +117,7 @@ class Signup extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Color(0xFF3AA772),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),

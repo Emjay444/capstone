@@ -22,7 +22,7 @@ class Forgotpass extends StatelessWidget {
               child: const Icon(
                 Icons.lock_outline,
                 size: 200,
-                color: Colors.green,
+                color: Color(0xFF3AA772),
               ),
             ),
 
@@ -55,9 +55,9 @@ class Forgotpass extends StatelessWidget {
               width: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.green, Colors.teal],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+                  colors: [Color(0xFF2D9254), Color(0xFF00382A)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50),
