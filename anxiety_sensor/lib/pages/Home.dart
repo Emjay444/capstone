@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -339,10 +339,10 @@ class NotificationCard extends StatelessWidget {
   final String time;
 
   const NotificationCard({
-    Key? key,
+    super.key,
     required this.message,
     required this.time,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -386,8 +386,7 @@ class NotificationCard extends StatelessWidget {
 class BatteryIndicator extends StatelessWidget {
   final double batteryLevel;
 
-  const BatteryIndicator({Key? key, required this.batteryLevel})
-      : super(key: key);
+  const BatteryIndicator({super.key, required this.batteryLevel});
 
   @override
   Widget build(BuildContext context) {

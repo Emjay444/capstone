@@ -19,6 +19,8 @@ class MyApp extends StatelessWidget {
 }
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -222,7 +224,7 @@ class ProfileDetailField extends StatelessWidget {
   final List<String>? dropdownItems;
   final TextEditingController? controller;
 
-  const ProfileDetailField({
+  const ProfileDetailField({super.key, 
     required this.title,
     this.value = '',
     this.isEditing = false,
