@@ -8,6 +8,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
 }
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -174,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 class OptionTile extends StatelessWidget {
   final String title;
 
-  OptionTile({required this.title});
+  const OptionTile({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
