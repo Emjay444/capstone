@@ -8,6 +8,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,35 +26,13 @@ class MyApp extends StatelessWidget {
 }
 
 class WatchScreen extends StatefulWidget {
+  const WatchScreen({super.key});
+
   @override
   _WatchScreenState createState() => _WatchScreenState();
 }
 
 class _WatchScreenState extends State<WatchScreen> {
-  int _selectedIndex = 1;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Navigator.pushNamed(context, _getRoute(index));
-  }
-
-  String _getRoute(int index) {
-    switch (index) {
-      case 0:
-        return '/home';
-      case 1:
-        return '/watch';
-      case 2:
-        return '/search';
-      case 3:
-        return '/profile';
-      default:
-        return '/home';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,35 +117,17 @@ class _WatchScreenState extends State<WatchScreen> {
                       icon: Icons.battery_alert,
                       showBatteryIndicator: true,
                     ),
+
+                    // Temperature Card
+                    _buildStatCard(
+                      title: 'Temperature',
+                      value: '36.5',
+                      unit: '°C',
+                      icon: Icons.thermostat,
+                    ),
                   ],
                 ),
               ),
-            ),
-
-            // Bottom Navigation Bar
-            BottomNavigationBar(
-              selectedItemColor: const Color(0xFF4CAF50),
-              unselectedItemColor: Colors.grey,
-              currentIndex: _selectedIndex,
-              onTap: _onItemTapped,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.watch),
-                  label: 'Wearable',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: 'Search',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
-                ),
-              ],
             ),
           ],
         ),

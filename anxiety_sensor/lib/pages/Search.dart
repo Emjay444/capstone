@@ -9,6 +9,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,6 +27,8 @@ class MyApp extends StatelessWidget {
 }
 
 class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -33,47 +37,24 @@ class _SearchScreenState extends State<SearchScreen> {
   late GoogleMapController mapController;
 
   final LatLng _center = const LatLng(45.521563, -122.677433);
-  int _selectedIndex = 2;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Navigator.pushNamed(context, _getRoute(index));
-  }
-
-  String _getRoute(int index) {
-    switch (index) {
-      case 0:
-        return '/home';
-      case 1:
-        return '/watch';
-      case 2:
-        return '/search';
-      case 3:
-        return '/profile';
-      default:
-        return '/home';
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Search',
+        title: const Text(
+          'Nearest Clinic',
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -93,16 +74,16 @@ class _SearchScreenState extends State<SearchScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Icon(Icons.search, color: Colors.white),
-                    SizedBox(width: 8),
+                    const Icon(Icons.search, color: Colors.white),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: TextField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Search...',
                           hintStyle: TextStyle(color: Colors.white),
                           border: InputBorder.none,
                         ),
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ],
@@ -119,30 +100,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 zoom: 11.0,
               ),
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color(0xFF4CAF50),
-        unselectedItemColor: Colors.grey,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.watch),
-            label: 'Wearable',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
           ),
         ],
       ),

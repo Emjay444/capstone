@@ -1,201 +1,321 @@
 import 'package:flutter/material.dart';
-import 'Home.dart';
-import 'Watch.dart';
-import 'Search.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ProfileScreen(),
-      routes: {
-        '/home': (context) => HomeScreen(),
-        '/profile': (context) => ProfileScreen(),
-        '/watch': (context) => WatchScreen(),
-        '/search': (context) => SearchScreen(),
-      },
     );
   }
 }
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  int _selectedIndex = 3;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Navigator.pushNamed(context, _getRoute(index));
-  }
-
-  String _getRoute(int index) {
-    switch (index) {
-      case 0:
-        return '/home';
-      case 1:
-        return '/watch';
-      case 2:
-        return '/search';
-      case 3:
-        return '/profile';
-      default:
-        return '/home';
-    }
-  }
+  String firstName = '';
+  String middleName = '';
+  String lastName = '';
+  String age = '';
+  String sex = '';
+  String dateOfBirth = '';
+  String homeAddress = '';
+  String emergencyContact = '';
+  String dateAdded = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-          'Profile',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
         elevation: 0,
+        backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, '/home');
           },
         ),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // User section
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-            child: Row(
+          // Profile picture and name section
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
               children: [
-                // Circle avatar placeholder
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFD9EAD3),
-                    shape: BoxShape.circle,
-                  ),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage(
+                      'assets/profile.jpg'), // Replace with your image asset
                 ),
-                SizedBox(width: 16),
-                // User name text
+                const SizedBox(height: 10),
                 Text(
-                  'User',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          // Green and light green boxes
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFE0EAD9),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                  '$firstName $lastName',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
                 ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF197225),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                TextButton(
+                  onPressed: () {
+                    _showEditProfileDialog(context);
+                  },
+                  child: Text(
+                    'Edit',
+                    style: TextStyle(color: Colors.green, fontSize: 16),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 16),
-          // Options list
+          const SizedBox(height: 20),
+
+          // Details section
           Expanded(
             child: Container(
-              color: Color(0xFFE8F0E4),
+              decoration: BoxDecoration(
+                color: Colors.green.shade100,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
+              padding: const EdgeInsets.all(16),
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 children: [
-                  OptionTile(title: 'My Account'),
-                  OptionTile(title: 'Settings'),
-                  OptionTile(title: 'Notifications'),
-                  OptionTile(title: 'Logout'),
+                  ProfileDetailField(title: 'First name', value: firstName),
+                  ProfileDetailField(title: 'Middle Name', value: middleName),
+                  ProfileDetailField(title: 'Last Name', value: lastName),
+                  ProfileDetailField(title: 'Age', value: age),
+                  ProfileDetailField(title: 'Sex', value: sex),
+                  ProfileDetailField(
+                      title: 'Date of Birth', value: dateOfBirth),
+                  ProfileDetailField(title: 'Home Address', value: homeAddress),
+                  ProfileDetailField(
+                      title: 'Emergency Contact', value: emergencyContact),
+                  ProfileDetailField(title: 'Date Added', value: dateAdded),
                 ],
               ),
             ),
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color(0xFF4CAF50),
-        unselectedItemColor: Colors.grey,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    );
+  }
+
+  void _showEditProfileDialog(BuildContext context) {
+    final TextEditingController firstNameController =
+        TextEditingController(text: firstName);
+    final TextEditingController middleNameController =
+        TextEditingController(text: middleName);
+    final TextEditingController lastNameController =
+        TextEditingController(text: lastName);
+    final TextEditingController ageController =
+        TextEditingController(text: age);
+    final TextEditingController sexController =
+        TextEditingController(text: sex);
+    final TextEditingController dateOfBirthController =
+        TextEditingController(text: dateOfBirth);
+    final TextEditingController homeAddressController =
+        TextEditingController(text: homeAddress);
+    final TextEditingController emergencyContactController =
+        TextEditingController(text: emergencyContact);
+    final TextEditingController dateAddedController =
+        TextEditingController(text: dateAdded);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Profile'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                ProfileDetailField(
+                    title: 'First name',
+                    controller: firstNameController,
+                    isEditing: true),
+                ProfileDetailField(
+                    title: 'Middle Name',
+                    controller: middleNameController,
+                    isEditing: true),
+                ProfileDetailField(
+                    title: 'Last Name',
+                    controller: lastNameController,
+                    isEditing: true),
+                ProfileDetailField(
+                    title: 'Age', controller: ageController, isEditing: true),
+                ProfileDetailField(
+                  title: 'Sex',
+                  controller: sexController,
+                  isEditing: true,
+                  isDropdown: true,
+                  dropdownItems: ['Male', 'Female'],
+                ),
+                ProfileDetailField(
+                    title: 'Date of Birth',
+                    controller: dateOfBirthController,
+                    isEditing: true,
+                    showCalendarIcon: true),
+                ProfileDetailField(
+                    title: 'Home Address',
+                    controller: homeAddressController,
+                    isEditing: true),
+                ProfileDetailField(
+                    title: 'Emergency Contact',
+                    controller: emergencyContactController,
+                    isEditing: true,
+                    isPhoneNumber: true),
+                ProfileDetailField(
+                    title: 'Date Added',
+                    controller: dateAddedController,
+                    isEditing: false),
+              ],
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.watch),
-            label: 'Wearable',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                // Save the changes and close the dialog
+                setState(() {
+                  firstName = firstNameController.text;
+                  middleName = middleNameController.text;
+                  lastName = lastNameController.text;
+                  age = ageController.text;
+                  sex = sexController.text;
+                  dateOfBirth = dateOfBirthController.text;
+                  homeAddress = homeAddressController.text;
+                  emergencyContact = emergencyContactController.text;
+                  dateAdded = dateAddedController.text;
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Update'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
 
-class OptionTile extends StatelessWidget {
+class ProfileDetailField extends StatelessWidget {
   final String title;
+  final String value;
+  final bool isEditing;
+  final bool showCalendarIcon;
+  final bool isPhoneNumber;
+  final bool isDropdown;
+  final List<String>? dropdownItems;
+  final TextEditingController? controller;
 
-  OptionTile({required this.title});
+  const ProfileDetailField({super.key, 
+    required this.title,
+    this.value = '',
+    this.isEditing = false,
+    this.showCalendarIcon = false,
+    this.isPhoneNumber = false,
+    this.isDropdown = false,
+    this.dropdownItems,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        height: 50,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        alignment: Alignment.centerLeft,
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: title.isEmpty ? FontWeight.normal : FontWeight.bold,
-            color: title.isEmpty ? Colors.transparent : Colors.black,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
+            ),
           ),
-        ),
+          const SizedBox(height: 4),
+          if (isDropdown && dropdownItems != null)
+            DropdownButtonFormField<String>(
+              value:
+                  controller?.text.isNotEmpty == true ? controller?.text : null,
+              items: dropdownItems!
+                  .map((item) => DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(item),
+                      ))
+                  .toList(),
+              onChanged:
+                  isEditing ? (value) => controller?.text = value ?? '' : null,
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                filled: true,
+                fillColor: isEditing ? Colors.white : Colors.grey.shade200,
+              ),
+            )
+          else
+            TextField(
+              controller: controller,
+              enabled: isEditing,
+              keyboardType:
+                  isPhoneNumber ? TextInputType.phone : TextInputType.text,
+              inputFormatters: isPhoneNumber
+                  ? [
+                      LengthLimitingTextInputFormatter(11),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ]
+                  : null,
+              decoration: InputDecoration(
+                hintText: value,
+                hintStyle: TextStyle(color: Colors.black, fontSize: 16),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                filled: true,
+                fillColor: isEditing ? Colors.white : Colors.grey.shade200,
+                suffixIcon: showCalendarIcon
+                    ? IconButton(
+                        icon: Icon(Icons.calendar_today),
+                        onPressed: () async {
+                          DateTime? selectedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                          );
+                          if (selectedDate != null) {
+                            controller?.text =
+                                DateFormat('yyyy-MM-dd').format(selectedDate);
+                          }
+                        },
+                      )
+                    : null,
+              ),
+            ),
+        ],
       ),
     );
   }

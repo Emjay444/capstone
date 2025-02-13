@@ -6,6 +6,8 @@ import 'pages/Home.dart'; // Import the Home page
 import 'pages/Search.dart'; // Import the Search page
 import 'pages/Profile.dart'; // Import the Profile page
 import 'pages/Watch.dart'; // Import the Watch page
+import 'pages/Stats.dart'; // Import the Stats page
+import 'pages/Settings.dart'; // Import the Settings page
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/profile', // Set the initial route to search
+      initialRoute: '/home', // Set the initial route to search
       routes: {
         '/': (context) => Login(),
         '/register': (context) => const Signup(),
@@ -31,6 +33,8 @@ class MyApp extends StatelessWidget {
         '/search': (context) => SearchScreen(), // Add the search route
         '/profile': (context) => ProfileScreen(), // Add the profile route
         '/watch': (context) => WatchScreen(), // Add the watch route
+        '/stats': (context) => StatsScreen(), // Add the stats route
+        '/settings': (context) => SettingsScreen(), // Add the settings route
       },
     );
   }

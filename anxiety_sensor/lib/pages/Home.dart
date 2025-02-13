@@ -1,312 +1,423 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'Login.dart';
+import 'Signup.dart';
+import 'Forgotpass.dart';
+import 'Search.dart';
 import 'Profile.dart';
 import 'Watch.dart';
-import 'Search.dart';
+import 'Stats.dart';
+import 'Settings.dart'; // Import the Settings page
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      title: 'Anxiety Detector',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/profile', // Set the initial route to search
       routes: {
-        '/home': (context) => HomeScreen(),
-        '/profile': (context) => ProfileScreen(),
-        '/watch': (context) => WatchScreen(),
-        '/search': (context) => SearchScreen(),
+        '/': (context) => Login(),
+        '/register': (context) => const Signup(),
+        '/forgot-password': (context) => const Forgotpass(),
+        '/home': (context) => HomeScreen(), // Add the home route
+        '/search': (context) => SearchScreen(), // Add the search route
+        '/profile': (context) => ProfileScreen(), // Add the profile route
+        '/watch': (context) => WatchScreen(), // Add the watch route
+        '/stats': (context) => StatsScreen(), // Add the stats route
+        '/settings': (context) => SettingsScreen(), // Add the settings route
       },
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Navigator.pushNamed(context, _getRoute(index));
-  }
-
-  String _getRoute(int index) {
-    switch (index) {
-      case 0:
-        return '/home';
-      case 1:
-        return '/watch';
-      case 2:
-        return '/search';
-      case 3:
-        return '/profile';
-      default:
-        return '/home';
-    }
-  }
+  List<Map<String, String>> tasks = [];
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double horizontalPadding = screenWidth * 0.10;
-
     return Scaffold(
-      backgroundColor: const Color(0xFF197225), // Matches the green background
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        elevation: 0,
-        toolbarHeight: 0, // No visible AppBar
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Card(
+      backgroundColor: const Color(0xFFE8F5E9), // Light green background
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Hello Message
+              Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                color: const Color(0xFF81C784),
+                color: Colors.green.shade50,
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    "Hello user",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: const [
+                      CircleAvatar(
+                        radius: 16,
+                        backgroundColor: Colors.grey,
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        'Hello Mejia!',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            // Meditation card
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              color: const Color(0xFF81C784),
-              child: Padding(
-                padding: const EdgeInsets.all(11.0),
-                child: Row(
-                  children: [
-                    // Meditation content
-                    Expanded(
-                      child: Column(
+
+              const SizedBox(height: 16),
+
+              // Meditation Card and Action Icons Row
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Meditation Card
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      height: 150,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "meditation",
+                            'meditation',
                             style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            "take a break",
-                            style: TextStyle(
+                              color: Colors.black54,
                               fontSize: 14,
-                              color: Colors.white,
                             ),
                           ),
-                          SizedBox(height: 16),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.timer,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                "10 min",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          )
+                          Text(
+                            'take a break',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            '(5 min)',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14,
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    // Meditation image
-                    Image.asset(
-                      'assets/meditation.png', // Replace with your asset image path
-                      height: 100,
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  // Action Icons Grid
+                  Expanded(
+                    flex: 3,
+                    child: GridView.count(
+                      shrinkWrap: true,
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 20,
+                      childAspectRatio: 4,
+                      children: [
+                        _buildActionIcon(
+                            Icons.watch_outlined, 'Watch', context, '/watch'),
+                        _buildActionIcon(
+                            Icons.navigation, 'Navigation', context, '/search'),
+                        _buildActionIcon(Icons.person_outline, 'Profile',
+                            context, '/profile'),
+                        _buildActionIcon(Icons.calendar_today, 'Calendar',
+                            context, null, _showDateTimePicker),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // Connection Status
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Connected'),
+                    Row(
+                      children: [
+                        BatteryIndicator(
+                          batteryLevel: 0.75, // Example battery level
+                        ),
+                        const SizedBox(width: 8),
+                        const Text('75%'),
+                      ],
                     ),
                   ],
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            // Grid of cards
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio:
-                      0.8, // Adjust the aspect ratio to make the cards smaller
-                  children: List.generate(4, (index) {
-                    if (index == 0) {
-                      // Bar chart card
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            height: 150, // Set the height of the card
-                            width: 150, // Set the width of the card
-                            child: BarChart(
-                              BarChartData(
-                                alignment: BarChartAlignment.spaceAround,
-                                barGroups: [
-                                  BarChartGroupData(
-                                    x: 0,
-                                    barRods: [
-                                      BarChartRodData(
-                                        y: 8,
-                                        colors: [Colors.green],
-                                      ),
-                                    ],
-                                  ),
-                                  BarChartGroupData(
-                                    x: 1,
-                                    barRods: [
-                                      BarChartRodData(
-                                        y: 10,
-                                        colors: [Colors.green],
-                                      ),
-                                    ],
-                                  ),
-                                  BarChartGroupData(
-                                    x: 2,
-                                    barRods: [
-                                      BarChartRodData(
-                                        y: 14,
-                                        colors: [Colors.green],
-                                      ),
-                                    ],
-                                  ),
-                                  BarChartGroupData(
-                                    x: 3,
-                                    barRods: [
-                                      BarChartRodData(
-                                        y: 15,
-                                        colors: [Colors.green],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    } else if (index == 1) {
-                      // Calendar card
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            height: 150, // Set the height of the card
-                            width: 150, // Set the width of the card
-                            child: TableCalendar(
-                              firstDay: DateTime.utc(2020, 1, 1),
-                              lastDay: DateTime.utc(2030, 12, 31),
-                              focusedDay: _focusedDay,
-                              selectedDayPredicate: (day) {
-                                return isSameDay(_selectedDay, day);
-                              },
-                              onDaySelected: (selectedDay, focusedDay) {
-                                setState(() {
-                                  _selectedDay = selectedDay;
-                                  _focusedDay =
-                                      focusedDay; // update `_focusedDay` here as well
-                                });
-                              },
-                              calendarFormat: _calendarFormat,
-                              availableCalendarFormats: const {
-                                CalendarFormat.month: 'Month',
-                                CalendarFormat.week: 'Week',
-                              },
-                              onFormatChanged: (format) {
-                                setState(() {
-                                  _calendarFormat = format;
-                                });
-                              },
-                              onPageChanged: (focusedDay) {
-                                _focusedDay = focusedDay;
-                              },
-                            ),
-                          ),
-                        ),
-                      );
-                    }
-                    // Empty cards
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      color: Colors.grey[200],
-                      child: SizedBox(
-                        height: 150, // Set the height of the card
-                        width: 150, // Set the width of the card
-                      ),
-                    );
-                  }),
+
+              const SizedBox(height: 16),
+
+              
+
+              // Notifications Section
+              const Text(
+                'Your Notifications',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 14,
                 ),
               ),
+              const SizedBox(height: 8),
+              Expanded(
+                child: ListView(
+                  children: [
+                    NotificationCard(
+                      message: "Don't forget to take a break!",
+                      time: "09:02 AM",
+                    ),
+                    const SizedBox(height: 8),
+                    NotificationCard(
+                      message: "Try to take a walk if you have time :)",
+                      time: "05:07 PM",
+                    ),
+                    const SizedBox(height: 8),
+                    NotificationCard(
+                      message: "Don't wait until tomorrow!",
+                      time: "06:03 PM",
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(
+            horizontal: 50), // Adjust margin to center the nav bar
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: Icon(Icons.home, color: Colors.green[600]),
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.bar_chart,
+                  color: Colors.green[600]), // Change icon to bar_chart
+              onPressed: () {
+                Navigator.pushNamed(context, '/stats'); // Route to stats.dart
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.settings, color: Colors.green[600]),
+              onPressed: () {
+                Navigator.pushNamed(
+                    context, '/settings'); // Route to settings.dart
+              },
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color(0xFF4CAF50),
-        unselectedItemColor: Colors.grey,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    );
+  }
+
+  Widget _buildActionIcon(
+      IconData icon, String label, BuildContext context, String? route,
+      [VoidCallback? onTap]) {
+    return GestureDetector(
+      onTap: onTap ??
+          () {
+            if (route != null) {
+              Navigator.pushNamed(context, route);
+            }
+          },
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: onTap ??
+            () {
+              if (route != null) {
+                Navigator.pushNamed(context, route);
+              }
+            },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.watch),
-            label: 'Wearable',
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                color: Colors.green[600],
+                size: 24,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: TextStyle(
+                  color: Colors.green[600],
+                  fontSize: 12,
+                ),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+        ),
+      ),
+    );
+  }
+
+  void _showDateTimePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    ).then((selectedDate) {
+      if (selectedDate != null) {
+        setState(() {
+        });
+      }
+    });
+  }
+
+}
+
+class NotificationCard extends StatelessWidget {
+  final String message;
+  final String time;
+
+  const NotificationCard({
+    super.key,
+    required this.message,
+    required this.time,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(0, 2),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            message,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            time,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.black54,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BatteryIndicator extends StatelessWidget {
+  final double batteryLevel;
+
+  const BatteryIndicator({super.key, required this.batteryLevel});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 40,
+      height: 20,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(3),
+      ),
+      child: Stack(
+        children: [
+          Container(
+            width: batteryLevel * 36,
+            margin: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              color: batteryLevel > 0.2 ? Colors.green : Colors.red,
+              borderRadius: BorderRadius.circular(1),
+            ),
+          ),
+          Positioned(
+            right: 2,
+            top: 5,
+            bottom: 5,
+            child: Container(
+              width: 2,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(1),
+              ),
+            ),
           ),
         ],
       ),
