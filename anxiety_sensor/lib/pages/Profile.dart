@@ -224,7 +224,8 @@ class ProfileDetailField extends StatelessWidget {
   final List<String>? dropdownItems;
   final TextEditingController? controller;
 
-  const ProfileDetailField({super.key, 
+  const ProfileDetailField({
+    super.key,
     required this.title,
     this.value = '',
     this.isEditing = false,
@@ -306,6 +307,7 @@ class ProfileDetailField extends StatelessWidget {
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now(),
                           );
+
                           if (selectedDate != null) {
                             controller?.text =
                                 DateFormat('yyyy-MM-dd').format(selectedDate);

@@ -138,10 +138,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     flex: 3,
                     child: GridView.count(
                       shrinkWrap: true,
+                      physics:
+                          NeverScrollableScrollPhysics(), // Prevents independent scrolling
                       crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 20,
-                      childAspectRatio: 4,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio:
+                          1.8, // Adjust aspect ratio for better spacing
                       children: [
                         _buildActionIcon(
                             Icons.watch_outlined, 'Watch', context, '/watch'),
@@ -185,8 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               const SizedBox(height: 16),
-
-              
 
               // Notifications Section
               const Text(
@@ -326,12 +327,10 @@ class _HomeScreenState extends State<HomeScreen> {
       lastDate: DateTime(2100),
     ).then((selectedDate) {
       if (selectedDate != null) {
-        setState(() {
-        });
+        setState(() {});
       }
     });
   }
-
 }
 
 class NotificationCard extends StatelessWidget {
